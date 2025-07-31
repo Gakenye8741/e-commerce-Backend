@@ -1,0 +1,66 @@
+
+
+###
+POST http://localhost:5000/api/create-User
+Content-Type: application/json
+
+{
+    "firstName" :"Gakenye",
+    "lastName" :"Gakenye",
+    "email":"Gakenye@mail.com",
+    "password":"12345678",
+    "contactPhone": "0112310754",
+    "address": "50 Nyeri"
+    
+}
+###
+GET http://localhost:5000/api/AllUsers
+
+
+###
+GET  http://localhost:5000/api/User/4
+
+
+###
+GET http://localhost:5000/api/search-user?lastName=gake
+
+###
+###
+PUT  http://localhost:5000/api/update-User/1
+Content-Type: application/json
+
+{
+    "firstName" :"BRIAN"    
+}
+
+
+###
+DELETE http://localhost:5000/api/delete-User/1
+
+###
+GET http://localhost:5000/api/get-All-User-Details/4
+
+# products Routes
+###
+GET http://localhost:5000/api/All-Products
+
+###
+POST http://localhost:5000/api/create-Product
+Content-Type: application/json
+
+{
+    "title":"Air Jordan 4",
+    "description":"Colorway: White/Fire Red/Black/Tech GreyThe Air Jordan 4 Retro returns with a clean blend of classic design and modern comfort. Featuring a premium leather upper in a crisp white base, bold Fire Red accents, and black and grey detailing, this iconic silhouette stands out on and off the court.",
+    "price":"4000",
+    "stock": "100"
+}
+
+
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"brayogakenye04@gmail.com",
+    "password":"Gakenye123#"
+}
