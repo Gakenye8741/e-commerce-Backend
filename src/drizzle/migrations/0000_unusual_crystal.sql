@@ -1,5 +1,13 @@
 CREATE TYPE "public"."payment_status" AS ENUM('pending', 'completed', 'failed');--> statement-breakpoint
 CREATE TYPE "public"."user_role" AS ENUM('user', 'admin');--> statement-breakpoint
+CREATE TABLE "admin_responses" (
+	"responseId" serial PRIMARY KEY NOT NULL,
+	"ticketId" integer NOT NULL,
+	"adminId" integer NOT NULL,
+	"message" text NOT NULL,
+	"createdAt" timestamp DEFAULT now()
+);
+--> statement-breakpoint
 CREATE TABLE "carts" (
 	"cartId" serial PRIMARY KEY NOT NULL,
 	"userId" integer NOT NULL,
@@ -100,6 +108,8 @@ CREATE TABLE "users" (
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
+ALTER TABLE "admin_responses" ADD CONSTRAINT "admin_responses_ticketId_supportTickets_ticketId_fk" FOREIGN KEY ("ticketId") REFERENCES "public"."supportTickets"("ticketId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "admin_responses" ADD CONSTRAINT "admin_responses_adminId_users_userId_fk" FOREIGN KEY ("adminId") REFERENCES "public"."users"("userId") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "carts" ADD CONSTRAINT "carts_userId_users_userId_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("userId") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "carts" ADD CONSTRAINT "carts_productId_products_productId_fk" FOREIGN KEY ("productId") REFERENCES "public"."products"("productId") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "images" ADD CONSTRAINT "images_productId_products_productId_fk" FOREIGN KEY ("productId") REFERENCES "public"."products"("productId") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

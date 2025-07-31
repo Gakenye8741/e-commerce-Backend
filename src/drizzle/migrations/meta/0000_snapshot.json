@@ -1,9 +1,80 @@
 {
-  "id": "933e1a34-8286-4e34-9c7c-98739a0f7572",
+  "id": "840f111b-78c5-438d-bd51-8ca1dad6ac9e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.admin_responses": {
+      "name": "admin_responses",
+      "schema": "",
+      "columns": {
+        "responseId": {
+          "name": "responseId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "ticketId": {
+          "name": "ticketId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adminId": {
+          "name": "adminId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "admin_responses_ticketId_supportTickets_ticketId_fk": {
+          "name": "admin_responses_ticketId_supportTickets_ticketId_fk",
+          "tableFrom": "admin_responses",
+          "tableTo": "supportTickets",
+          "columnsFrom": [
+            "ticketId"
+          ],
+          "columnsTo": [
+            "ticketId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "admin_responses_adminId_users_userId_fk": {
+          "name": "admin_responses_adminId_users_userId_fk",
+          "tableFrom": "admin_responses",
+          "tableTo": "users",
+          "columnsFrom": [
+            "adminId"
+          ],
+          "columnsTo": [
+            "userId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.carts": {
       "name": "carts",
       "schema": "",
