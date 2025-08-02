@@ -15,7 +15,7 @@ export const sendNotificationEmail = async (email: string, subject: string, firs
         });
 
         const mailOptions = {
-            from:  `"TicketStream Events" <${process.env.EMAIL_SENDER}>`, // sender address
+            from:  `"Nova E-commerce Platform 🛍️🛒" <${process.env.EMAIL_SENDER}>`, // sender address
             to: email,
             subject: subject, // Subject line
             text: `${message}\n`, // plain text body

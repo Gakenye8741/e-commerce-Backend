@@ -7,7 +7,7 @@
     "dev": "tsx watch ./src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "gen": "drizzle-kit generate",
+    "gen": "drizzle-kit generate && drizzle-kit push",
     "migrate": "tsx src/drizzle/migrate.ts",
     "studio": "drizzle-kit studio",
     "push": "drizzle-kit generate && drizzle-kit push",

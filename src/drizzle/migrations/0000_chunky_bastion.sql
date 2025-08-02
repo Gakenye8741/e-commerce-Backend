@@ -19,6 +19,7 @@ CREATE TABLE "categories" (
 	"categoryId" serial PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"description" text,
+	"imageUrl" varchar,
 	"createdAt" timestamp DEFAULT now(),
 	CONSTRAINT "categories_name_unique" UNIQUE("name")
 );
@@ -77,6 +78,7 @@ CREATE TABLE "reviews" (
 CREATE TABLE "subcategories" (
 	"subcategoryId" serial PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
+	"imageUrl" varchar,
 	"description" text,
 	"categoryId" integer NOT NULL,
 	"createdAt" timestamp DEFAULT now()

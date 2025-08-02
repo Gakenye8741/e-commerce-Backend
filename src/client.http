@@ -1,18 +1,19 @@
 
 
 ###
-POST http://localhost:5000/api/create-User
+POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-    "firstName" :"Gakenye",
+    "firstName" :"Brian",
     "lastName" :"Gakenye",
-    "email":"Gakenye@mail.com",
+    "email":"codewithgakenye@gmail.com",
     "password":"12345678",
     "contactPhone": "0112310754",
-    "address": "50 Nyeri"
-    
+    "address": "50 Nyeri",
+    "role":"admin"    
 }
+
 ###
 GET http://localhost:5000/api/AllUsers
 
@@ -63,4 +64,48 @@ Content-Type: application/json
 {
     "email":"brayogakenye04@gmail.com",
     "password":"Gakenye123#"
+}
+
+#categries
+###
+POST http://localhost:5000/api/add-category 
+Content-Type: application/json
+
+{
+    "name":"Clothes"
+}
+
+###
+GET http://localhost:5000/api/all-categories
+
+# subcategories
+###
+GET http://localhost:5000/api/all-subcategories
+
+###
+POST http://localhost:5000/api/add-subcategory
+Content-Type: application/json
+
+{
+    "name":"Airforce",
+     "categoryId": 2
+}
+
+###
+GET http://localhost:5000/api/All-Products
+
+
+###
+DELETE http://localhost:5000/api/delete-Product/8
+
+###
+PUT http://localhost:5000/api/update-Product/10
+Content-Type: application/json
+
+{
+  "title": "Updated Product Title",
+  "description": "Updated description here.",
+  "price": 49.99,
+  "stock": 120,
+  "subcategoryId": 3
 }

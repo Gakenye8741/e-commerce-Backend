@@ -44,6 +44,7 @@ export const categories = pgTable("categories", {
   categoryId: serial("categoryId").primaryKey(),
   name: varchar("name", { length: 255 }).notNull().unique(),
   description: text("description"),
+  imageUrl: varchar("imageUrl"),
   createdAt: timestamp("createdAt").defaultNow(),
 });
 
@@ -51,6 +52,7 @@ export const categories = pgTable("categories", {
 export const subcategories = pgTable("subcategories", {
   subcategoryId: serial("subcategoryId").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
+  imageUrl: varchar('imageUrl'),
   description: text("description"),
   categoryId: integer("categoryId")
     .references(() => categories.categoryId)

@@ -11,6 +11,7 @@ import {
   updateCategory,
   deleteCategory,
 } from "./categories.controller";
+import { adminAuth, anyAuthenticatedUser } from "../../middleware/authBearer";
 
 const categoryRoutes = Router();
 
@@ -33,12 +34,12 @@ categoryRoutes.get("/search-categories", searchCategoriesByName);
 categoryRoutes.get("/category-with-subcategories/:categoryId", getCategoryWithSubcategories);
 
 // Create new category
-categoryRoutes.post("/add-category", createCategory);
+categoryRoutes.post("/add-category",adminAuth, createCategory);
 
 // Update category
-categoryRoutes.put("/update-category/:categoryId", updateCategory);
+categoryRoutes.put("/update-category/:categoryId",adminAuth, updateCategory);
 
 // Delete category
-categoryRoutes.delete("/delete-category/:categoryId", deleteCategory);
+categoryRoutes.delete("/delete-category/:categoryId",adminAuth, deleteCategory);
 
 export default categoryRoutes;

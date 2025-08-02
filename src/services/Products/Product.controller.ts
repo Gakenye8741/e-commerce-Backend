@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 import {
   getAllProductsService,
@@ -27,8 +26,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 export const getProductById = async (req: Request, res: Response) => {
   const productId = parseInt(req.params.productId);
   if (isNaN(productId)) {
-    res.status(400).json({ error: "Enter a valid Product ID (number)" });
-    return;
+    return res.status(400).json({ error: "Enter a valid Product ID (number)" });
   }
 
   try {
@@ -47,8 +45,7 @@ export const getProductById = async (req: Request, res: Response) => {
 export const getProductByTitle = async (req: Request, res: Response) => {
   const title = req.query.title as string;
   if (!title) {
-    res.status(400).json({ message: "Title query parameter is required" });
-    return;
+    return res.status(400).json({ message: "Title query parameter is required" });
   }
 
   try {
@@ -63,20 +60,15 @@ export const getProductByTitle = async (req: Request, res: Response) => {
   }
 };
 
-
-
 // Create new product
 export const createNewProduct = async (req: Request, res: Response) => {
   const { title, description, price, stock, subcategoryId } = req.body;
 
-  // Validate required fields
   if (!title || price === undefined || stock === undefined || !subcategoryId) {
-    res.status(400).json({ message: "Title, price, stock, and subcategoryId are required fields" });
-    return;
+    return res.status(400).json({ message: "Title, price, stock, and subcategoryId are required fields" });
   }
 
   try {
-    // Convert values to appropriate types if necessary
     const parsedPrice = typeof price === "string" ? parseFloat(price) : price;
     const parsedStock = typeof stock === "string" ? parseInt(stock) : stock;
     const parsedSubcategoryId = typeof subcategoryId === "string" ? parseInt(subcategoryId) : subcategoryId;
@@ -95,25 +87,24 @@ export const createNewProduct = async (req: Request, res: Response) => {
   }
 };
 
-
-// Update product
+// ✅ Update product — now includes `subcategoryId`
 export const updateProduct = async (req: Request, res: Response) => {
   const productId = parseInt(req.params.productId);
   if (isNaN(productId)) {
-    res.status(400).json({ error: "Enter a valid Product ID" });
-    return;
+    return res.status(400).json({ error: "Enter a valid Product ID" });
   }
 
-  const { title, description, price, stock } = req.body;
+  const { title, description, price, stock, subcategoryId } = req.body;
   const updates: any = {};
+
   if (title !== undefined) updates.title = title;
   if (description !== undefined) updates.description = description;
   if (price !== undefined) updates.price = price;
   if (stock !== undefined) updates.stock = stock;
+  if (subcategoryId !== undefined) updates.subcategoryId = subcategoryId;
 
   if (Object.keys(updates).length === 0) {
-    res.status(400).json({ error: "No fields provided for update" });
-    return;
+    return res.status(400).json({ error: "No fields provided for update" });
   }
 
   try {
@@ -128,8 +119,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
   const productId = parseInt(req.params.productId);
   if (isNaN(productId)) {
-    res.status(400).json({ error: "Enter a valid Product ID" });
-    return;
+    return res.status(400).json({ error: "Enter a valid Product ID" });
   }
 
   try {

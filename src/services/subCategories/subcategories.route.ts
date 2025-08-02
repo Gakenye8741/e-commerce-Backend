@@ -8,6 +8,7 @@ import {
   deleteSubcategory,
   getSubcategoryWithContent,
 } from "./subcategories.controller";
+import { adminAuth } from "../../middleware/authBearer";
 
 const subcategoryRoutes = Router();
 
@@ -18,13 +19,13 @@ subcategoryRoutes.get("/all-subcategories", getAllSubcategories);
 subcategoryRoutes.get("/subcategory/:subcategoryId", getSubcategoryById);
 
 // Create a new subcategory
-subcategoryRoutes.post("/add-subcategory", createSubcategory);
+subcategoryRoutes.post("/add-subcategory",adminAuth, createSubcategory);
 
 // Update a subcategory
-subcategoryRoutes.put("/update-subcategory/:subcategoryId", updateSubcategory);
+subcategoryRoutes.put("/update-subcategory/:subcategoryId",adminAuth, updateSubcategory);
 
 // Delete a subcategory
-subcategoryRoutes.delete("/delete-subcategory/:subcategoryId", deleteSubcategory);
+subcategoryRoutes.delete("/delete-subcategory/:subcategoryId",adminAuth, deleteSubcategory);
 
 // Get subcategory with all its content (products, images, reviews)
 subcategoryRoutes.get("/subcategory-content/:subcategoryId", getSubcategoryWithContent);
