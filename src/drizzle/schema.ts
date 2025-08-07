@@ -20,6 +20,12 @@ export const paymentStatusEnum = pgEnum("payment_status", [
 
 export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
 
+export const orderStatusEnum = pgEnum("order_status", [
+  "pending",
+  "completed",
+  "failed",
+]);
+
 // ========== TABLES ==========
 
 // Users
@@ -52,7 +58,7 @@ export const categories = pgTable("categories", {
 export const subcategories = pgTable("subcategories", {
   subcategoryId: serial("subcategoryId").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
-  imageUrl: varchar('imageUrl'),
+  imageUrl: varchar("imageUrl"),
   description: text("description"),
   categoryId: integer("categoryId")
     .references(() => categories.categoryId)
@@ -90,6 +96,7 @@ export const orders = pgTable("orders", {
     .references(() => users.userId)
     .notNull(),
   totalAmount: numeric("totalAmount", { precision: 10, scale: 2 }).notNull(),
+  status: orderStatusEnum("status").default("pending"),
   createdAt: timestamp("createdAt").defaultNow(),
 });
 
@@ -97,7 +104,7 @@ export const orders = pgTable("orders", {
 export const orderItems = pgTable("orderItems", {
   orderItemId: serial("orderItemId").primaryKey(),
   orderId: integer("orderId")
-    .references(() => orders.orderId)
+    .references(() => orders.orderId, { onDelete: "cascade" })
     .notNull(),
   productId: integer("productId")
     .references(() => products.productId)
@@ -319,4 +326,5 @@ export type TSelectAdminResponse = typeof adminResponses.$inferSelect;
 export type TInsertAdminResponse = typeof adminResponses.$inferInsert;
 
 export type TPaymentStatus = typeof paymentStatusEnum.enumValues[number];
+export type TOrderStatus = typeof orderStatusEnum.enumValues[number];
 export type TUserRole = typeof userRoleEnum.enumValues[number];

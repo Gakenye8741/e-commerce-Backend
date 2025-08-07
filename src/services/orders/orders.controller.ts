@@ -120,7 +120,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
 
   try {
     const result = await deleteOrderService(orderId);
-    res.status(200).json({ message: result });
+    res.status(200).json({ message: "Order Deleted Succesfully!" });
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to delete order" });
   }

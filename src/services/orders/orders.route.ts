@@ -8,6 +8,7 @@ import {
   updateOrder,
   deleteOrder
 } from "./orders.controller";
+import { anyAuthenticatedUser } from "../../middleware/authBearer";
 
 const orderRoutes = Router();
 
@@ -24,9 +25,9 @@ orderRoutes.get("/UserOrders/:userId", getOrdersByUserId);
 orderRoutes.post("/create-Order", createNewOrder);
 
 // Update Order
-orderRoutes.put("/update-Order/:orderId", updateOrder);
+orderRoutes.put("/update-Order/:orderId", anyAuthenticatedUser, updateOrder);
 
 // Delete Order
-orderRoutes.delete("/delete-Order/:orderId", deleteOrder);
+orderRoutes.delete("/delete-Order/:orderId",anyAuthenticatedUser, deleteOrder);
 
 export default orderRoutes;
