@@ -92,6 +92,9 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:5000/api/subcategory-content/6
+
+###
 GET http://localhost:5000/api/All-Products
 
 
@@ -108,4 +111,71 @@ Content-Type: application/json
   "price": 49.99,
   "stock": 120,
   "subcategoryId": 3
+}
+
+#IMAGES
+### Upload a new image (POST)
+POST http://localhost:5000/api/create-Image
+Content-Type: application/json
+
+{
+  "productId": "11",
+  "imageUrl": "https://res.cloudinary.com/dwibg4vvf/image/upload/v1691496472/sample.jpg",
+  "alt": "Sample Product Image"
+}
+
+
+### Get all images
+GET http://localhost:5000/api/AllImages
+
+### Get image by ID
+GET http://localhost:5000/api/Image/1
+
+### Get images by productId
+GET http://localhost:5000/api/ProductImages/11
+
+### Create a new image
+POST http://localhost:5000/api/create-Image
+Content-Type: application/json
+
+{
+  "productId": 11,
+  "url": "https://example1.com/image.jpg",
+  "alt": "Example image"
+}
+
+### Update image
+PUT http://localhost:5000/api/update-Image/1
+Content-Type: application/json
+
+{
+  "url": "https://example.com/updated.jpg",
+  "alt": "Updated alt text"
+}
+
+### Delete image
+DELETE http://localhost:5000/api/delete-Image/1
+
+###
+POST http://localhost:5000/api/create-OrderItem
+Content-Type: application/json
+
+{
+  "orderId": 19,
+  "productId": 20,
+  "quantity": 2,
+  "price": 3500.00
+}
+
+
+###
+GET http://localhost:5000/api/AllOrders
+
+###
+POST http://localhost:5000/api/create-Order
+Content-Type: application/json
+
+{
+   "userId": 480223717,
+   "totalAmount": 5000
 }

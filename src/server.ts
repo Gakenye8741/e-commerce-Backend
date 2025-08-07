@@ -5,7 +5,6 @@ import cors from 'cors';
 import { logger } from './middleware/logger';
 import userRoutes from './services/users/users.route'
 import productRoutes from './services/Products/Product.route';
-import imageRoutes from './services/images/images.route';
 import orderRoutes from './services/orders/orders.route';
 import orderItemRoutes from './services/orderItems/orderItems.route';
 import reviewRoutes from './services/reveiws/reveiw.route';
@@ -16,6 +15,7 @@ import adminResponseRoutes from './services/adminResponse/adminResponse.route';
 import categoryRoutes from './services/categories/categories.route';
 import subcategoryRoutes from './services/subCategories/subcategories.route';
 import { authRouter } from './services/auth/auth.route';
+import imageRoutes from './services/images/images.route';
 
 
 dotenv.config();

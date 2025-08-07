@@ -1,123 +1,104 @@
-import { Request, Response } from "express";
+import { RequestHandler } from "express";
 import {
   getAllImagesService,
-  getImageByIdService,
   getImagesByProductIdService,
+  getImageByIdService,
   createImageService,
   updateImageService,
-  deleteImageService
+  deleteImageService,
 } from "./images.Service";
 
-// Get all images
-export const getAllImages = async (req: Request, res: Response) => {
+// 📥 Get all images
+export const getAllImagesController: RequestHandler = async (_req, res) => {
   try {
     const allImages = await getAllImagesService();
-    if (allImages.length === 0) {
-      res.status(404).json({ message: "No images found!" });
-    } else {
-      res.status(200).json({ allImages, message: "Images fetched successfully!" });
-    }
+    res.status(200).json(allImages);
   } catch (error: any) {
-    res.status(500).json({ error: error.message || "Could not fetch images" });
+    res.status(500).json({ message: "Failed to fetch images", error: error.message });
   }
 };
 
-// Get image by ID
-export const getImageById = async (req: Request, res: Response) => {
+// 📥 Get image by ID
+export const getImageByIdController: RequestHandler = async (req, res) => {
   const imageId = parseInt(req.params.imageId);
   if (isNaN(imageId)) {
-    res.status(400).json({ error: "Enter a valid Image ID (number)" });
+    res.status(400).json({ message: "Invalid image ID" });
     return;
   }
 
   try {
     const image = await getImageByIdService(imageId);
     if (!image) {
-      res.status(404).json({ message: "No image found with that ID" });
-    } else {
-      res.status(200).json({ image });
+      res.status(404).json({ message: "Image not found" });
+      return;
     }
+    res.status(200).json(image);
   } catch (error: any) {
-    res.status(500).json({ error: error.message || "Error fetching image by ID" });
+    res.status(500).json({ message: "Failed to fetch image", error: error.message });
   }
 };
 
-// Get images by Product ID
-export const getImagesByProductId = async (req: Request, res: Response) => {
+// 📥 Get images by productId
+export const getImagesByProductIdController: RequestHandler = async (req, res) => {
   const productId = parseInt(req.params.productId);
   if (isNaN(productId)) {
-    res.status(400).json({ error: "Enter a valid Product ID" });
+    res.status(400).json({ message: "Invalid product ID" });
     return;
   }
 
   try {
     const images = await getImagesByProductIdService(productId);
-    if (images.length === 0) {
-      res.status(404).json({ message: "No images found for this product" });
-    } else {
-      res.status(200).json({ images });
-    }
+    res.status(200).json(images);
   } catch (error: any) {
-    res.status(500).json({ error: error.message || "Error fetching images by Product ID" });
+    res.status(500).json({ message: "Failed to fetch images for product", error: error.message });
   }
 };
 
-// Create image
-export const createImage = async (req: Request, res: Response) => {
+// ➕ Create new image
+export const createImageController: RequestHandler = async (req, res) => {
   const { productId, url, alt } = req.body;
 
   if (!productId || !url) {
-    res.status(400).json({ message: "Product ID and URL are required fields" });
+    res.status(400).json({ message: "Missing required fields: productId and url" });
     return;
   }
 
   try {
-    const result = await createImageService({ productId, url, alt });
-    res.status(201).json({ message: result });
+    await createImageService({ productId, url, alt });
+    res.status(201).json({ message: "Image created successfully ✅" });
   } catch (error: any) {
-    res.status(500).json({ error: error.message || "Error creating image" });
+    res.status(500).json({ message: "Failed to create image", error: error.message });
   }
 };
 
-// Update image
-export const updateImage = async (req: Request, res: Response) => {
+// 🔄 Update image
+export const updateImageController: RequestHandler = async (req, res) => {
   const imageId = parseInt(req.params.imageId);
   if (isNaN(imageId)) {
-    res.status(400).json({ error: "Enter a valid Image ID" });
-    return;
-  }
-
-  const { productId, url, alt } = req.body;
-  const updates: any = {};
-  if (productId !== undefined) updates.productId = productId;
-  if (url !== undefined) updates.url = url;
-  if (alt !== undefined) updates.alt = alt;
-
-  if (Object.keys(updates).length === 0) {
-    res.status(400).json({ error: "No fields provided for update" });
+    res.status(400).json({ message: "Invalid image ID" });
     return;
   }
 
   try {
-    const result = await updateImageService(imageId, updates);
-    res.status(200).json({ message: result, updatedFields: updates });
+    await updateImageService(imageId, req.body);
+    res.status(200).json({ message: "Image updated successfully 🔄" });
   } catch (error: any) {
-    res.status(500).json({ error: error.message || "Failed to update image" });
+    res.status(500).json({ message: "Failed to update image", error: error.message });
   }
 };
 
-// Delete image
-export const deleteImage = async (req: Request, res: Response) => {
+// 🗑️ Delete image
+export const deleteImageController: RequestHandler = async (req, res) => {
   const imageId = parseInt(req.params.imageId);
   if (isNaN(imageId)) {
-    res.status(400).json({ error: "Enter a valid Image ID" });
+    res.status(400).json({ message: "Invalid image ID" });
     return;
   }
 
   try {
-    const result = await deleteImageService(imageId);
-    res.status(200).json({ message: result });
+    await deleteImageService(imageId);
+    res.status(200).json({ message: "Image deleted successfully ❌" });
   } catch (error: any) {
-    res.status(500).json({ error: error.message || "Failed to delete image" });
+    res.status(500).json({ message: "Failed to delete image", error: error.message });
   }
 };

@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 import {
   getAllOrdersService,
@@ -63,7 +62,7 @@ export const getOrdersByUserId = async (req: Request, res: Response) => {
   }
 };
 
-// Create new order
+// ✅ Create new order
 export const createNewOrder = async (req: Request, res: Response) => {
   const { userId, totalAmount } = req.body;
 
@@ -73,12 +72,17 @@ export const createNewOrder = async (req: Request, res: Response) => {
   }
 
   try {
-    const result = await createOrderService({ userId, totalAmount });
-    res.status(201).json({ message: result });
+    const order = await createOrderService({ userId, totalAmount });
+
+    res.status(201).json({
+      message: "Order created successfully 🧾",
+      order, // ✅ Now includes orderId
+    });
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Error creating order" });
   }
 };
+
 
 // Update order
 export const updateOrder = async (req: Request, res: Response) => {

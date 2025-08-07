@@ -34,10 +34,11 @@ export const getOrdersByUserIdService = async (
 // Create new order
 export const createOrderService = async (
   order: TInsertOrder
-): Promise<string> => {
-  await db.insert(orders).values(order).returning();
-  return "Order created successfully 🧾";
+): Promise<TSelectOrder> => {
+  const [createdOrder] = await db.insert(orders).values(order).returning(); // returning full row
+  return createdOrder; // ✅ contains orderId, userId, etc.
 };
+
 
 // Update order
 export const updateOrderService = async (

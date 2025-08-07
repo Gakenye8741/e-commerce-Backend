@@ -1,31 +1,33 @@
+// images.route.ts
 import { Router } from "express";
 import {
-  getAllImages,
-  getImageById,
-  getImagesByProductId,
-  createImage,
-  updateImage,
-  deleteImage
+  getAllImagesController,
+  getImageByIdController,
+  getImagesByProductIdController,
+  createImageController,
+  updateImageController,
+  deleteImageController
 } from "./images.controller";
+import { adminAuth } from "../../middleware/authBearer";
 
 const imageRoutes = Router();
 
-// Get All Images
-imageRoutes.get("/AllImages", getAllImages);
+// 📥 GET all images
+imageRoutes.get("/AllImages", getAllImagesController);
 
-// Get Image By ID
-imageRoutes.get("/Image/:imageId", getImageById);
+// 📥 GET image by imageId
+imageRoutes.get("/Image/:imageId", getImageByIdController);
 
-// Get Images By Product ID
-imageRoutes.get("/ProductImages/:productId", getImagesByProductId);
+// 📥 GET images by productId
+imageRoutes.get("/ProductImages/:productId", getImagesByProductIdController);
 
-// Create Image
-imageRoutes.post("/create-Image", createImage);
+// ➕ POST create new image
+imageRoutes.post("/create-Image",adminAuth, createImageController);
 
-// Update Image
-imageRoutes.put("/update-Image/:imageId", updateImage);
+// 🔄 PUT update image
+imageRoutes.put("/update-Image/:imageId",adminAuth, updateImageController);
 
-// Delete Image
-imageRoutes.delete("/delete-Image/:imageId", deleteImage);
+// 🗑️ DELETE image
+imageRoutes.delete("/delete-Image/:imageId",adminAuth, deleteImageController);
 
 export default imageRoutes;

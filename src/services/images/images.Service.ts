@@ -1,58 +1,59 @@
-
-import { desc, eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import db from "../../drizzle/db";
-import { images, TInsertImage, TSelectImage } from "../../drizzle/schema";
+import {
+  images,
+  TInsertImage,
+  TSelectImage,
+  
+} from "../../drizzle/schema";
 
-// Get all images
+// ✅ Get all images (newest first)
 export const getAllImagesService = async (): Promise<TSelectImage[]> => {
-  const imageList = await db.query.images.findMany({
+  return await db.query.images.findMany({
     orderBy: [desc(images.imageId)],
   });
-  return imageList;
 };
 
-// Get image by ID
+// ✅ Get image by imageId
 export const getImageByIdService = async (
   imageId: number
 ): Promise<TSelectImage | undefined> => {
-  const image = await db.query.images.findFirst({
+  return await db.query.images.findFirst({
     where: eq(images.imageId, imageId),
   });
-  return image ?? undefined;
 };
 
-// Get images by Product ID
+// ✅ Get images by productId
 export const getImagesByProductIdService = async (
   productId: number
 ): Promise<TSelectImage[]> => {
-  const result = await db.query.images.findMany({
+  return await db.query.images.findMany({
     where: eq(images.productId, productId),
     orderBy: [desc(images.imageId)],
   });
-  return result;
 };
 
-// Create new image
+// ✅ Create new image
 export const createImageService = async (
-  image: TInsertImage
+  newImage: TInsertImage
 ): Promise<string> => {
-  await db.insert(images).values(image).returning();
-  return "Image created successfully 🖼️";
+  await db.insert(images).values(newImage).returning();
+  return "Image uploaded successfully ✅";
 };
 
-// Update image
+// ✅ Update image by imageId
 export const updateImageService = async (
   imageId: number,
-  image: Partial<TInsertImage>
+  updatedFields: Partial<TInsertImage>
 ): Promise<string> => {
-  await db.update(images).set(image).where(eq(images.imageId, imageId));
+  await db.update(images).set(updatedFields).where(eq(images.imageId, imageId));
   return "Image updated successfully 🔄";
 };
 
-// Delete image
+// ✅ Delete image by imageId
 export const deleteImageService = async (
   imageId: number
 ): Promise<string> => {
   await db.delete(images).where(eq(images.imageId, imageId));
-  return "Image deleted successfully 🗑️";
+  return "Image deleted successfully ❌";
 };
