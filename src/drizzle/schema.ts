@@ -158,13 +158,25 @@ export const payments = pgTable("payments", {
     .references(() => users.userId)
     .notNull(),
   amount: numeric("amount", { precision: 10, scale: 2 }).notNull(),
+
   method: varchar("method", { length: 50 }).default("mpesa"),
   status: varchar("status", {
     enum: paymentStatusEnum.enumValues,
   }).default("pending"),
+
   transactionId: varchar("transactionId", { length: 100 }),
+  checkoutRequestId: varchar("checkoutRequestId", { length: 100 }),     // ✅ NEW
+  merchantRequestId: varchar("merchantRequestId", { length: 100 }),     // ✅ NEW
+
+  payerPhone: varchar("payerPhone", { length: 20 }),                    // ✅ NEW
+  resultCode: integer("resultCode"),                                   // ✅ NEW
+  resultDesc: varchar("resultDesc", { length: 255 }),                  // ✅ NEW
+
+  paymentDate: varchar("paymentDate", { length: 20 }),                 // ✅ NEW (ISO YYYY-MM-DD)
+
   createdAt: timestamp("createdAt").defaultNow(),
 });
+
 
 // Admin Responses
 export const adminResponses = pgTable("admin_responses", {

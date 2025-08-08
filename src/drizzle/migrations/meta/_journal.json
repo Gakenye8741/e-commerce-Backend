@@ -15,6 +15,13 @@
       "when": 1754566466941,
       "tag": "0001_conscious_lord_hawal",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1754655887605,
+      "tag": "0002_tired_senator_kelly",
+      "breakpoints": true
     }
   ]
 }

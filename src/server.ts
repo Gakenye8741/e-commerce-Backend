@@ -16,6 +16,7 @@ import categoryRoutes from './services/categories/categories.route';
 import subcategoryRoutes from './services/subCategories/subcategories.route';
 import { authRouter } from './services/auth/auth.route';
 import imageRoutes from './services/images/images.route';
+import { mpesaRouter } from './services/mpesa/mpesa.route';
 
 
 dotenv.config();
@@ -51,6 +52,7 @@ app.use('/api/', adminResponseRoutes);
 app.use('/api/', categoryRoutes);
 app.use('/api/', subcategoryRoutes);
 app.use('/api/', authRouter);
+app.use('/api/', mpesaRouter)
 
 // ✅ Start server
 app.listen(PORT, () => {
